@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/chenxun/disk/work/darkmatter/ppbs4/build",
+  "command": "/usr/bin/c++  -Dppbs_EXPORTS -I/home/chenxun/disk/work/darkmatter/ppbs4 -I/usr/include/python3.7m  -O3 -DNDEBUG -fPIC   -o CMakeFiles/ppbs.dir/ppbs.cc.o -c /home/chenxun/disk/work/darkmatter/ppbs4/ppbs.cc",
+  "file": "/home/chenxun/disk/work/darkmatter/ppbs4/ppbs.cc"
+}
+]
