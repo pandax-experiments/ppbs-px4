@@ -18,3 +18,10 @@ set_target_properties(ppbs PROPERTIES
   SUFFIX ${_modsuffix}
   )
 target_link_libraries(ppbs pbsf_s)
+
+add_library(ppbsn SHARED ppbsn.cc)
+set_target_properties(ppbsn PROPERTIES
+  PREFIX ""
+  SUFFIX ${_modsuffix}
+  )
+target_link_libraries(ppbsn pbsf_s)
