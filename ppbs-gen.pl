@@ -18,12 +18,12 @@
 #   along with ppbs.  If not, see <http://www.gnu.org/licenses/>.
 
 use strict;
-use Data::Dumper;
+use File::Basename;
 use feature 'say';
 # usage
 # ppbs-gen.pl input_header_file input_type_file
 
-die "Usage: $0 input_header_file input_type_file [index0,[index1...]]\n" unless scalar @ARGV==2 or scalar @ARGV==3;
+die "Usage: $0 input_header_file module_suffix input_type_file [index0,[index1...]]\n" unless scalar @ARGV==3 or scalar @ARGV==4;
 
 sub parse_input {
     my ($fin) = @_;
@@ -70,7 +70,7 @@ sub parse_input {
 }
 
 # read the realm and top level information from header file
-open(my $fh, "<", $ARGV[0]) or die "Cannot open file $ARGV[0]: $!\n";
+open(my $fh, "<", $ARGV[1]) or die "Cannot open file $ARGV[1]: $!\n";
 
 my $realm = "";
 my @types;
@@ -94,12 +94,12 @@ close $fh or die "Cannot close file $ARGV[0]: $!\n";
 
 # open the bsi file to read types
 
-open(my $fh1, "<", $ARGV[1]) or die "Cannot open file $ARGV[1]: $!\n";
+open(my $fh1, "<", $ARGV[2]) or die "Cannot open file $ARGV[2]: $!\n";
 my $type_entries = parse_input ($fh1);
 
 my @indices;
-if (scalar @ARGV == 3) {
-    @indices = split /,/, $ARGV[2];
+if (scalar @ARGV == 4) {
+    @indices = split /,/, $ARGV[3];
 }
 
 my @sequential_readers;
@@ -119,8 +119,9 @@ sub gen_file_readers {
     }
 }
 
+my $header_name = basename($ARGV[1]);
 # generate code (to STDOUT)
-print <<"EOT"
+print <<"EOT";
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
@@ -131,13 +132,13 @@ print <<"EOT"
 
 #include "ppbs.hh"
 
-#include "$ARGV[0]"
+#include "${header_name}"
 
 namespace py = pybind11;
 namespace pf = pbsf;
 
 EOT
-    ;
+
 gen_file_readers();
 gen_python_modules();
 
@@ -148,14 +149,14 @@ sub gen_python_modules {
     say "}";
 }
 
+my $mod_name = "ppbs-".$ARGV[0];
 sub gen_python_modules_header {
-    print <<"EOF"
-PYBIND11_MODULE(ppbs, m) {
+    print <<"EOT";
+PYBIND11_MODULE(${mod_name}, m) {
     m.doc() = "pbs data reader";
     using namespace pybind11::literals;
 
-EOF
-	;
+EOT
 }
 
 sub gen_python_readers {
@@ -206,4 +207,3 @@ sub gen_python_enum_type {
     }
     say "        .export_values();\n";
 }
-#print Dumper($type_entries);
