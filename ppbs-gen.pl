@@ -149,8 +149,8 @@ sub gen_python_modules {
     say "}";
 }
 
-my $mod_name = "ppbs-".$ARGV[0];
 sub gen_python_modules_header {
+    my $mod_name = "ppbs_".$ARGV[0];
     print <<"EOT";
 PYBIND11_MODULE(${mod_name}, m) {
     m.doc() = "pbs data reader";

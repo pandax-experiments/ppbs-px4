@@ -19,5 +19,5 @@ add_custom_command(
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(pybind11)
-pybind11_add_module(ppbs-px4 ppbs.cc pxtypes-generated.hh MODULE)
-target_link_libraries(ppbs-px4 PRIVATE pbsf_s)
+pybind11_add_module(ppbs_px4 ppbs.cc pxtypes-generated.hh MODULE)
+target_link_libraries(ppbs_px4 PRIVATE pbsf_s)
