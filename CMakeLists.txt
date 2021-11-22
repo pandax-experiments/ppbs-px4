@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.4...3.18)
 
 project(PPBS)
 
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${Python3_INCLUDE_DIRS})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 set(BSIC_EXECUTABLE pbsic)
 add_custom_command(
