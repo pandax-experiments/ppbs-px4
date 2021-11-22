@@ -7,10 +7,8 @@ Please make sure you have and `bamboo-shoot3` installed.
 ```bash
 git submodule init
 git submodule update
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+python3 setup.py build
+python3 setup.py install --user
 ```
 
 ## How to use it
