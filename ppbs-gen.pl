@@ -20,10 +20,8 @@
 use strict;
 use File::Basename;
 use feature 'say';
-# usage
-# ppbs-gen.pl input_header_file input_type_file
 
-die "Usage: $0 input_header_file module_suffix input_type_file [index0,[index1...]]\n" unless scalar @ARGV==3 or scalar @ARGV==4;
+die "Usage: $0 module_suffix input_header_file input_type_file [index0,[index1...]]\n" unless scalar @ARGV==3 or scalar @ARGV==4;
 
 sub parse_input {
     my ($fin) = @_;
