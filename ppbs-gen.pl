@@ -175,6 +175,20 @@ sub gen_python_type_binding {
 	my $type = $entry->{type};
 	if ($type eq "struct" || $type eq "tuple") {
 	    say "    py::class_<${name}>(m, \"${name}\")\n        .def(py::init<>())";
+	    if ($type eq "tuple" && grep (/^$name$/, @indices)) {
+		# for names as index, add another constructor
+		my $input = "";
+		for my $e (@{$entry->{var}}) {
+		    my $et = $e->{type};
+		    $et =~ s/(int\d+)$/$1_t/g;
+		    if (\$e == \@{$entry->{var}}[-1]) {
+			$input = $input.$et;
+		    } else {
+			$input = $input.$et.", ";
+		    }
+		}
+		say "        .def(py::init<".$input.">())";
+	    }
 	    gen_python_class_member($name, $entry->{var});
 	} elsif ($type =~/enum/) {
 	    say "    py::enum_<${name}>(m, \"${name}\")";
