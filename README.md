@@ -27,5 +27,7 @@ print(idx.runNumber, idx.fileNumber, idx.eventNumber)
 for sig in event.signals:
     print(sig.type, sig.startTime)
 	
-
+# read data using index
+idx = px4.EventIndex(3216, 0, 234)
+event = data.get(idx)
 ```
