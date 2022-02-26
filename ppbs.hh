@@ -4,6 +4,7 @@
 #include <fstream>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include <bs3/pbs.hh>
 
@@ -22,7 +23,8 @@ void declare_indexed_reader(py::module &m, const std::string &data_name) {
         .def(py::init<const std::string &>())
         .def("next", &T::next)
 	.def("previous", &T::previous)
-	.def("get", &T::get);
+	.def("get", &T::get)
+	.def("indices", &T::indices);
 }
 
 template <typename T, typename Realm> struct SequentialReader {
@@ -103,5 +105,9 @@ template <typename Index, typename T, typename Realm> struct IndexedReader {
         }
 	is = iss;
 	return iss->second->template as<T>();
+    }
+
+    std::vector<Index> indices() {
+	return data_file->indices();
     }
 };

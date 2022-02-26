@@ -119,7 +119,7 @@ class CMakeBuild(build_ext):
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="ppbs_px4",
-    version="0.0.2",
+    version="0.0.3",
     author="Chen Xun",
     author_email="chenxun@sjtu.edu.cn",
     description="Python binding to read PandaX bamboo-shoot3 data files",

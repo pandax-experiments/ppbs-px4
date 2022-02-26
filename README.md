@@ -30,4 +30,10 @@ for sig in event.signals:
 # read data using index
 idx = px4.EventIndex(3216, 0, 234)
 event = data.get(idx)
+
+# obtain the list of indices in an indexed input file
+indices = data.indices()
+
+for idx in indices:
+    event = data.get(idx)
 ```
