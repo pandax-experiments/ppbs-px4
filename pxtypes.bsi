@@ -20,6 +20,7 @@ tuple RawSegment {
   [uint16] adcValue;
   uint64 busyTime;
   uint32 sampleSize;
+  float baseLine;
 };
 
 tuple CalibPmtSegment {
@@ -58,7 +59,7 @@ struct CalibData {
   uint32 groupNumber = 2;
   uint64 startTime = 3;
   uint64 endTime = 4;
-  [CalibPmtSegment] segments = 5;
+  [CalibSegment] segments = 5;
 };
 
 enum HitType : uint8 {
@@ -78,7 +79,7 @@ struct SingleHit {
   float rmsPostBaseline = 10;
   float hitSearchThreshold = 11;
   HitType type = 12;
-  CalibPmtSegment segment = 13;
+  CalibSegment segment = 13;
 };
 
 struct HitData {
@@ -88,7 +89,7 @@ struct HitData {
 };
 
 enum SignalType : uint8 {
-  S1=1, S2, NOISE, UNKNOWN, SPARKING, S1_WITH_VETO, S2_WITH_VETO, PMT_SPARKING
+  S1=1, S2, NOISE, UNKNOWN, SPARKING, S1_WITH_VETO, S2_WITH_VETO, PMT_SPARKING, VETO
 };
 
 struct Signal {
@@ -98,10 +99,9 @@ struct Signal {
   float height = 4;
   SignalType type = 5;
   [SingleHit] hits = 6;
-  (uint32 => CalibPmtSegment) waveform = 7;
+  (uint32 => CalibSegment) waveform = 7;
   (std::string => float) fPars = 8;
   (std::string => int) iPars = 9;
-  [SingleHit] vetoHits = 10;
 };
 
 struct SignalData {
@@ -119,119 +119,4 @@ struct PhysicalEventData {
   EventNumber number = 2;
   PhysicalEventType type = 3;
   [Signal] signals = 4;
-}
-
-//struct SignalOld {
-//  uint32 runNumber = 1;
-//  uint32 groupNumber = 2;
-//  [SingleHit] hitsVec = 3;
-//  uint64 startTime = 4;
-//  uint64 endTime = 5;
-//  uint64 width = 6;
-//  float topCharge = 7;
-//  float bottomCharge = 8;
-//  float vetoCharge = 9;
-//  float topPosX = 10;
-//  float topPosY = 11;
-//  float bottomPosX = 12;
-//  float bottomPosY = 13;
-//  float xNN = 14;
-//  float yNN = 15;
-//  float xLRF = 16;
-//  float yLRF = 17;
-//  float height = 18;
-//  uint64 peakPos = 19;
-//  uint32 numTopHits = 20;
-//  uint32 numBottomHits = 21;
-//  SignalType signalType = 22;
-//  
-//  uint64 startFWHM = 23;
-//  uint64 FWHM = 24;
-//  uint64 startWten = 25;
-//  uint64 Wten = 26;
-//  uint32 nPeaks = 27;
-//  float esumCharge = 28;
-//  float mountCharge = 29;
-//  float summitCharge = 30;
-//  float NRheight = 31;
-//  float NRprearea = 32;
-//  float NRpostarea = 33;
-//  float pulseSymmetry1 = 34;
-//  float pulseSymmetry2 = 35;
-//};
-//
-//struct SignalDataOld {
-//  uint32 runNumber = 1;
-//  uint32 groupNumber = 2;
-//  CalibData esumData = 3;
-//  [Signal] signalVec = 4;
-//};
-//
-//struct S1SignalOld {
-//  uint32 groupNumber = 1;
-//  uint64 startTime = 2;
-//  uint64 width = 3;
-//  float topCharge = 4;
-//  float bottomCharge = 5;
-//  float height = 6;
-//  uint64 peakPos = 7;
-//  uint32 numTopHits = 8;
-//  uint32 numBottomHits = 9;
-//  uint64 startFWHM = 10;
-//  uint64 FWHM = 11;
-//  uint64 startWten = 12;
-//  uint64 Wten = 13;
-//  uint32 nPeaks = 14;
-//  float esumCharge = 15;
-//  float mountCharge = 16;
-//  float summitCharge = 17;
-//  float NRheight = 18;
-//  float NRprearea = 19;
-//  float NRpostarea = 20;
-//};
-//
-//struct S2SignalOld {
-//  uint32 groupNumber = 1;
-//  uint64 startTime = 2;
-//  uint64 width = 3;
-//  float topCharge = 4;
-//  float bottomCharge = 5;
-//  float topPosX = 6;
-//  float topPosY = 7;
-//  float bottomPosX = 8;
-//  float bottomPosY = 9;
-//  float xNN = 10;
-//  float yNN = 11;
-//  float xLRF = 12;
-//  float yLRF = 13;
-//  float height = 14;
-//  uint64 peakPos = 15;
-//  uint32 numTopHits = 16;
-//  uint32 numBottomHits = 17;
-//  uint64 startFWHM = 18;
-//  uint64 FWHM = 19;
-//  uint64 startWten = 20;
-//  uint64 Wten = 21;
-//  uint32 nPeaks = 22;
-//  float pulseSymmetry1 = 23;
-//  float pulseSymmetry2 = 24;
-//};
-//
-//struct NoiseSignalOld {
-//  uint32 groupNumber = 1;
-//  uint64 startTime = 2;
-//  uint64 width = 3;
-//  float charge = 4;
-//  uint32 numHits = 5;
-//};
-//
-//struct DarkMatterSignalOld {
-//  uint32 runNumber = 1;
-//  uint32 nS1 = 2;
-//  uint32 nS2 = 3;
-//  int32 s1max = 4;
-//  int32 s2max = 5;
-//  [S1Signal] S1Vec = 6;
-//  [S2Signal] S2Vec = 7;
-//  [NoiseSignal] NoiseVec = 8;
-//};
+};
