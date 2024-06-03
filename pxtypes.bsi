@@ -23,12 +23,6 @@ tuple RawSegment {
   float baseLine;
 };
 
-tuple CalibPmtSegment {
-  uint64 startTime;
-  uint32 channelNumber;
-  [float] peValue;
-};
-
 tuple CalibSegment {
   uint64 startTime;
   uint32 channelNumber;
@@ -89,7 +83,7 @@ struct HitData {
 };
 
 enum SignalType : uint8 {
-  S1=1, S2, NOISE, UNKNOWN, SPARKING, S1_WITH_VETO, S2_WITH_VETO, PMT_SPARKING, VETO
+  S1=1, S2, NOISE, UNKNOWN, SPARKING, PMT_SPARKING, VETO
 };
 
 struct Signal {
@@ -111,7 +105,7 @@ struct SignalData {
 };
 
 enum PhysicalEventType : uint8 {
-  UNKNOWN=1, SS, MS, BI_PO_214, BI_PO_212, KR_85, OTHER, S1_ONLY, S2_ONLY
+  UNKNOWN=1, SS, MS, BI_PO_214, BI_PO_212, KR_85, OTHER, S1_ONLY, S2_ONLY, PHYSICAL, NON_PHYSICAL, LONG_SPLIT, LAST_EVENT
 };
 
 struct PhysicalEventData {
@@ -119,4 +113,4 @@ struct PhysicalEventData {
   EventNumber number = 2;
   PhysicalEventType type = 3;
   [Signal] signals = 4;
-};
+}
