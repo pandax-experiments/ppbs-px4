@@ -83,7 +83,7 @@ struct HitData {
 };
 
 enum SignalType : uint8 {
-  S1=1, S2, NOISE, UNKNOWN, SPARKING, PMT_SPARKING, VETO
+  S1=1, S2, NOISE, UNKNOWN, SPARKING, S1_WITH_VETO, S2_WITH_VETO, PMT_SPARKING, VETO
 };
 
 struct Signal {
@@ -96,6 +96,7 @@ struct Signal {
   (uint32 => CalibSegment) waveform = 7;
   (std::string => float) fPars = 8;
   (std::string => int) iPars = 9;
+  [SingleHit] vetoHits = 10;
 };
 
 struct SignalData {
