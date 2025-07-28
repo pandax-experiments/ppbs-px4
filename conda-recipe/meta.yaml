@@ -1,0 +1,41 @@
+{% set name = "ppbs-px4" %}
+{% set version = "0.7.0" %}  # Update this with the correct version
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/pandax-experiments/ppbs-px4.git
+  git_rev: master  # or specify a particular commit or tag
+
+build:
+  number: 0
+  skip: true  # [not linux]
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+    - perl
+    - pybind11
+    - bamboo-shoot3  # You might need to create a separate conda package for this
+  host:
+    - python
+    - pip
+  run:
+    - python
+    - {{ pin_compatible('bamboo-shoot3', max_pin='x') }}
+
+test:
+  imports:
+    - ppbs_px4
+
+about:
+  home: https://github.com/pandax-experiments/ppbs-px4
+  license: GPLv3  # Update this if the license is specified
+  summary: 'Python binding for pandax bamboo-shoot3 files'
+
+extra:
+  recipe-maintainers:
+    - Xun Chen
